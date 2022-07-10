@@ -1,10 +1,14 @@
 #include <iostream>
+#include "Board/board.hpp"
+
 
 using namespace std;
 
 int main(){
 	
-	cout << "Hello World\n";
+	Board board;
+
+	board.print();
 
 	return 0;
 }
