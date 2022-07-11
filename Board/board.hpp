@@ -14,6 +14,12 @@ class Board{
 
 	private:
 		state BOARD[R][C];
+		int high[C];
+
+		bool checkRow(int,int);
+		bool checkCol(int,int);
+		bool checkMaj(int,int);
+		bool checkMin(int,int);
 
 	public:
 		Board();
