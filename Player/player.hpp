@@ -11,6 +11,7 @@ class Player{
 
 	private:
 		Type type;
+		string color; /*dos colores que pueden tener los jugadores el 1 ero en rojo y 2 do en azul*/
 
 	public:
 		Player();
