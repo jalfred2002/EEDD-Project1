@@ -58,4 +58,8 @@ void playerVsPlayer(){
 	board.adddMove(/* ficha */);
 	board.checkWinner(int col);
 
+
+
+
+	return;
 }
