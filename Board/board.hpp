@@ -2,6 +2,7 @@
 #define board_hpp
 
 #include <iostream>
+#include <cstdlib> 
 
 using namespace std;
 
@@ -23,8 +24,11 @@ class Board{
 
 	public:
 		Board();
-		bool addMove();
+		Board(const Board&);
 		void print();
+		void addMove(const bool, const int);
+		void removeMove(int);
+		bool checkWinner(int);
 
 
 };

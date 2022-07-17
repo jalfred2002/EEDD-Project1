@@ -11,9 +11,18 @@ Board::Board(){
         high[i] = 0;
 }
 
-void Board::print(){
-    cout << "\n\t\t-----------------------------\n\t\t| 0 | 1 | 2 | 3 | 4 | 5 | 6 |";
+Board::Board(const Board& b){
+    for(int i=0; i<R; i++)
+        for(int j=0; j<C; j++)
+            BOARD[i][j] = b.BOARD[i][j];
+    
+    for(int i=0; i<C; i++)
+        high[i] = b.high[i];
+}
 
+void Board::print(){
+    system("cls || clear");
+    cout << "\n\t\t  0   1   2   3   4   5   6  ";
     for(int i = 0; i < R; i++){
         cout << "\n\t\t-----------------------------\n\t\t";
         
@@ -26,7 +35,7 @@ void Board::print(){
         cout << "|";
     }
         
-    cout << "\n\t\t-----------------------------" << endl;
+    cout << "\n\t\t-----------------------------\n\n\t\t";
     return;
 }
 
@@ -51,24 +60,22 @@ bool Board::checkCol(int row, int col){
     return cont >= 4;
 }
 
-bool checkMajDiagonal(int row, int col){
-
+bool Board::checkMaj(int row, int col){
     int cont = 1;
     
     for(int i = 1; (col+i) < C && (row-i) >= 0 && BOARD[row][col] == BOARD[row-i][col+i]; i++)
         cont++;
 
-    for(int i = 1; (col-i) >= 0 && (row+i) < F && BOARD[row][col] == BOARD[row+i][col-i]; i++)
+    for(int i = 1; (col-i) >= 0 && (row+i) < R && BOARD[row][col] == BOARD[row+i][col-i]; i++)
         cont++;
 
     return cont >= 4;    
 }
 
-bool checkMinDiagonal(int row, int col){
-
+bool Board::checkMin(int row, int col){
     int cont = 1;
     
-    for(int i = 1; (col+i) < C && (row+i) < F && BOARD[row][col] == BOARD[row+i][col+i]; i++)
+    for(int i = 1; (col+i) < C && (row+i) < R && BOARD[row][col] == BOARD[row+i][col+i]; i++)
         cont++;
 
     for(int i = 1; (col-i) >= 0 && (row-i) >= 0 && BOARD[row][col] == BOARD[row-i][col-i]; i++)
@@ -78,24 +85,16 @@ bool checkMinDiagonal(int row, int col){
 }
 
 bool Board::checkWinner(int col){
-    int row = high[col];
+    int row = R-high[col];
     return checkRow(row,col) || checkCol(row,col) || checkMaj(row,col) || checkMin(row,col);
 }
 
-bool Board::addMove(const string ficha){ 
-    for (int i = 0; i <= R; i++){
-        if (i == R){
-            BOARD[i-1][col] = ficha; 
-            return true;
-        }
-
-        if (BOARD[i][col] != EMPTY){
-            BOARD[i-1][col] = ficha; 
-            return true;/*retorna la posicion de i*/
-        }
-    }
-
-    return false;
+void Board::addMove(const bool player, const int column){
+    int row = ++high[column];
+    BOARD[R - row][column] = player? P1 : P2;
 }
 
-// BOARD[R][C]
+void Board::removeMove(int col){
+    int row = high[col]--;
+    BOARD[R - row][col] = EMPTY;
+}
