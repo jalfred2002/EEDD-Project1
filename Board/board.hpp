@@ -26,10 +26,11 @@ class Board{
 		Board();
 		Board(const Board&);
 		void print();
+		bool fullColumn(const int);
+		bool full();
 		void addMove(const bool, const int);
 		void removeMove(int);
 		bool checkWinner(int);
-
 
 };
 

@@ -12,24 +12,25 @@ Board::Board(){
 }
 
 Board::Board(const Board& b){
-    for(int i=0; i<R; i++)
-        for(int j=0; j<C; j++)
+    for(int i = 0; i < R; i++)
+        for(int j = 0; j < C; j++)
             BOARD[i][j] = b.BOARD[i][j];
     
-    for(int i=0; i<C; i++)
+    for(int i = 0; i < C; i++)
         high[i] = b.high[i];
 }
 
 void Board::print(){
     system("cls || clear");
     cout << "\n\t\t  0   1   2   3   4   5   6  ";
+   
     for(int i = 0; i < R; i++){
         cout << "\n\t\t-----------------------------\n\t\t";
         
         for(int j = 0; j < C; j++){
             if(BOARD[i][j] == EMPTY) cout << "|   ";
-            if(BOARD[i][j] == P1) cout << "| x ";
-            if(BOARD[i][j] == P2) cout << "| o ";
+            if(BOARD[i][j] == P1) cout << "| x "; 
+            if(BOARD[i][j] == P2) cout << "| o "; 
         }
         
         cout << "|";
@@ -39,7 +40,7 @@ void Board::print(){
     return;
 }
 
-bool Board::checkRow(int row, int col){
+bool Board::checkCol(int row, int col){
     int cont = 1; 
     
     for(int i = 1; (row+i) < R && BOARD[row][col] == BOARD[row+i][col]; i++)
@@ -48,7 +49,7 @@ bool Board::checkRow(int row, int col){
     return cont >= 4;
 }
 
-bool Board::checkCol(int row, int col){
+bool Board::checkRow(int row, int col){
     int cont = 1;
     
     for(int i = 1; (col+i) < C && BOARD[row][col] == BOARD[row][col+i]; i++) 
@@ -92,9 +93,22 @@ bool Board::checkWinner(int col){
 void Board::addMove(const bool player, const int column){
     int row = ++high[column];
     BOARD[R - row][column] = player? P1 : P2;
+    return;
 }
 
 void Board::removeMove(int col){
     int row = high[col]--;
     BOARD[R - row][col] = EMPTY;
+    return;
+}
+
+bool Board::fullColumn(const int col){
+    return high[col] == R;
+}
+
+bool Board::full(){
+    for(int i = 0; i < C; i++)
+        if( !fullColumn(i) ) 
+            return false;
+    return true;
 }
